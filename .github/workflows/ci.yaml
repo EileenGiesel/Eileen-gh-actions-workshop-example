@@ -22,3 +22,17 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+  CD-Pipeline-GitHub-Actions:
+      needs: [ci-pipeline]
+      name: cd-pipeline
+      runs-on: ubuntu-latest
+      permissions:
+        pages: write
+        id-token: write
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      steps:
+        - name: Deploy pages
+          id: deployment
+          uses: actions/deploy-pages@v4
