@@ -23,7 +23,7 @@ jobs:
         with:
           path: dist
   CD-Pipeline-GitHub-Actions:
-      needs: [ci-pipeline]
+      needs: [CI-Pipeline-GitHub-Actions]
       name: cd-pipeline
       runs-on: ubuntu-latest
       permissions:
