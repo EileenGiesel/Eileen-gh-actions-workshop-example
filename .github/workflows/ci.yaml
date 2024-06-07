@@ -36,6 +36,8 @@ jobs:
         - name: Deploy pages
           id: deployment
           uses: actions/deploy-pages@v4
+      outputs:
+        page-url: ${{ steps.deployment.outputs.page_url }}
   smoke-test:
       needs: CD-Pipeline-GitHub-Actions
       runs-on: ubuntu-latest
