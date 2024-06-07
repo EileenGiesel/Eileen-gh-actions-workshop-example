@@ -22,6 +22,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: ${{ inputs.name }}
-          path: dist/${{ runner.temp }}/artifact.tar
+          path: dist/artifact.tar
           retention-days: ${{ inputs.retention-days }}
           if-no-files-found: error
