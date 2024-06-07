@@ -1,6 +1,6 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions
-on: [workflow_dispatch]
+name: GitHub Actions Demo pipeline
+run-name: ${{ github.actor }} is trying to set up pipeline
+on: [push, workflow_dispatch]
 jobs:
   CI-Pipeline-GitHub-Actions:
     name: ci-pipeline
