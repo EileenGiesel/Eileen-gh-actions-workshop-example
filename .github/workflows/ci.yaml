@@ -21,7 +21,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist/
   CD-Pipeline-GitHub-Actions:
       needs: [CI-Pipeline-GitHub-Actions]
       name: cd-pipeline
