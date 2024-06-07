@@ -24,6 +24,8 @@ jobs:
           path: dist/
   CD-Pipeline-GitHub-Actions:
       needs: [CI-Pipeline-GitHub-Actions]
+      outputs:
+        page-url: ${{ steps.deployment.outputs.page_url }}
       name: cd-pipeline
       runs-on: ubuntu-latest
       permissions:
@@ -36,15 +38,13 @@ jobs:
         - name: Deploy pages
           id: deployment
           uses: actions/deploy-pages@v4
-      outputs:
-        page-url: ${{ steps.deployment.outputs.page_url }}
   smoke-test:
       needs: CD-Pipeline-GitHub-Actions
       runs-on: ubuntu-latest
       timeout-minutes: 3
       strategy:
         matrix:
-          browser: [firefox, chromium]
+          browser-name: [firefox, chromium]
       steps:
            - name: Check out repository
              uses: actions/checkout@v4
@@ -59,18 +59,18 @@ jobs:
 
            - name: Install Playwright Browsers
              run:
-                npx playwright install ${{ matrix.browser }}
+                npx playwright install ${{ matrix.browser-name }}
 
            - name: Run Playwright tests
              run:
-                npx playwright test --project ${{ matrix.browser }}
+                npx playwright test --project ${{ matrix.browser-name }}
              env:
-                  PLAYWRIGHT_BASE_URL: ${{ needs.CD-Pipeline-GitHub-Actions.outputs.page_url }}
+              PLAYWRIGHT_BASE_URL: ${{ needs.CD-Pipeline-GitHub-Actions.outputs.page-url }}
 
            - uses: actions/upload-artifact@v4
              if: always()
              with:
               name:
-                  playwright-report-${{ matrix.browser }}
+                  playwright-report-${{ matrix.browser-name }}
               path: playwright-report/
               retention-days: 1
