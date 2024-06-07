@@ -1,0 +1,20 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions
+on: [workflow_dispatch]
+jobs:
+  CI-Pipeline-GitHub-Actions:
+    name: ci-pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Setup node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run prettier
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build
